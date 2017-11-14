@@ -1,0 +1,74 @@
+//
+// Icon Font: fontcustom
+//
+
+@font-face {
+  font-family: "fontcustom";
+  src: url("fontcustom_d4c277151ae3365f2d38e8232ede6289.eot");
+  src: url("fontcustom_d4c277151ae3365f2d38e8232ede6289.eot?#iefix") format("embedded-opentype"),
+       url("fontcustom_d4c277151ae3365f2d38e8232ede6289.woff2") format("woff2"),
+       url("fontcustom_d4c277151ae3365f2d38e8232ede6289.woff") format("woff"),
+       url("fontcustom_d4c277151ae3365f2d38e8232ede6289.ttf") format("truetype"),
+       url("fontcustom_d4c277151ae3365f2d38e8232ede6289.svg#fontcustom") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "fontcustom";
+    src: url("fontcustom_d4c277151ae3365f2d38e8232ede6289.svg#fontcustom") format("svg");
+  }
+}
+
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+.books_magazines_active:before,
+.books_magazines_normal:before,
+.clock:before,
+.icon-check:before,
+.icon-round-back:before,
+.icon-round-next:before,
+.icon-star-blue:before,
+.icon-uncheck:before,
+.icon-white-edit:before,
+.icon-white-trash:before,
+.image:before {
+  display: inline-block;
+  font-family: "fontcustom";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.books_magazines_active:before { content: "\f109"; }
+.books_magazines_normal:before { content: "\f10a"; }
+.clock:before { content: "\f105"; }
+.icon-check:before { content: "\f107"; }
+.icon-round-back:before { content: "\f102"; }
+.icon-round-next:before { content: "\f103"; }
+.icon-star-blue:before { content: "\f104"; }
+.icon-uncheck:before { content: "\f108"; }
+.icon-white-edit:before { content: "\f100"; }
+.icon-white-trash:before { content: "\f101"; }
+.image:before { content: "\f106"; }
+
+$font-fontcustom-books_magazines_active: "\f109";
+$font-fontcustom-books_magazines_normal: "\f10a";
+$font-fontcustom-clock: "\f105";
+$font-fontcustom-icon-check: "\f107";
+$font-fontcustom-icon-round-back: "\f102";
+$font-fontcustom-icon-round-next: "\f103";
+$font-fontcustom-icon-star-blue: "\f104";
+$font-fontcustom-icon-uncheck: "\f108";
+$font-fontcustom-icon-white-edit: "\f100";
+$font-fontcustom-icon-white-trash: "\f101";
+$font-fontcustom-image: "\f106";

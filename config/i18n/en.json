@@ -1,0 +1,45 @@
+{
+  "view" :"Ver",
+  "edit" :"Editar",
+  "name" :"Nombre",
+  "email" :"Correo electrónico",
+  "status" :"Estatus",
+  "delete" :"Eliminar",
+  "phone" :"Teléfono",
+  "actions" :"Acciones",
+  "list" :"Lista",
+  "searchDots" :"Buscar...",
+
+  "label.active": "Activo",
+
+  "menu.navigation": "Navegación",
+  "menu.controlPanel": "Panel de control",
+
+  "table.showing" :"Mostrando {lowerLimit} a {upperLimit} de",
+  "table.entries" :"entradas",
+  "table.previous" :"Anterior",
+  "table.next" :"Siguiente",
+  "table.list" :"Listado",
+  "table.update": "Actualizar lista",
+  "table.exportCSV": "Exportar CSV",
+
+  "app.name" :"Melia",
+  "app.yellowme" :"Yellowme",
+
+  "login.signin": "Ingesa tus datos",
+  "login.login": "Entrar",
+  "login.footer": "un producto de",
+  "login.email": "Email",
+  "login.password": "Password",
+  "login.newPassword": "New password",
+  "login.confirmPassword": "Confirm new password",
+
+  "patients" :"Pacientes",
+  "createPatient" :"Crear paciente",
+  "searchPatients" :"Buscar pacientes...",
+
+  "doctors" :"Doctores",
+  
+  "cookies.bannerMessage": "To give you the best experience, we use cookies. By using the website, you accept the use of cookies. ",
+  "desktop.tryBannerMessage": "To enjoy a better experience with Brandon Logan, we invite you to use it on desktop computer."
+}

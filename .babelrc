@@ -1,0 +1,18 @@
+{
+  "presets": [
+    'latest',
+    "react",
+    'stage-2'
+  ],
+  "plugins": [["import",
+  	{
+	    "libraryName": "antd",
+	    "libraryDirectory": "lib",
+	    "style": "css"
+	  },
+	  {
+	    "libraryName": "antd-mobile",
+	    "libraryDirectory": "component",
+	  },
+  ]]
+}

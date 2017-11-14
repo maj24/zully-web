@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/RobotoSlab-Regular.ttf');
+}
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: bold;
+  font-weight: 600;
+  src: url('../fonts/RobotoSlab-Bold.ttf');
+}
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/RobotoSlab-Light.ttf');
+}
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 200;
+  src: url('../fonts/RobotoSlab-Thin.ttf');
+}
+
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Karla-Regular.ttf');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: bold;
+  font-weight: 600;
+  src: url('../fonts/Karla-Bold.ttf');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/RobotoSlab-Light.ttf');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 200;
+  src: url('../fonts/RobotoSlab-Thin.ttf');
+}

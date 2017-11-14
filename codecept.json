@@ -1,0 +1,16 @@
+{
+  "tests": "tests/acceptance/features/**/*\\.Feature.js",
+  "timeout": 10000,
+  "output": "tests/acceptance/output",
+  "helpers": {
+    "Nightmare": {
+      "url": "http://localhost:3000"
+    }
+  },
+  "include": {
+    "I": "./tests/acceptance/helpers/actor/custom_steps.js"
+  },
+  "bootstrap": false,
+  "mocha": {},
+  "name": "zully-web"
+}

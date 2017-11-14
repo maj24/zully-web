@@ -1,0 +1,93 @@
+{
+  "checksum": {
+    "previous": "d4c277151ae3365f2d38e8232ede628955a86ab8352cf1df7af049c64d75228d",
+    "current": "d4c277151ae3365f2d38e8232ede628955a86ab8352cf1df7af049c64d75228d"
+  },
+  "fonts": [
+    "src/assets/fontcustom/fontcustom_d4c277151ae3365f2d38e8232ede6289.ttf",
+    "src/assets/fontcustom/fontcustom_d4c277151ae3365f2d38e8232ede6289.svg",
+    "src/assets/fontcustom/fontcustom_d4c277151ae3365f2d38e8232ede6289.woff",
+    "src/assets/fontcustom/fontcustom_d4c277151ae3365f2d38e8232ede6289.eot",
+    "src/assets/fontcustom/fontcustom_d4c277151ae3365f2d38e8232ede6289.woff2"
+  ],
+  "glyphs": {
+    "books_magazines_active": {
+      "codepoint": 61705,
+      "source": "src/assets/vectors/books_magazines_active.svg"
+    },
+    "books_magazines_normal": {
+      "codepoint": 61706,
+      "source": "src/assets/vectors/books_magazines_normal.svg"
+    },
+    "clock": {
+      "codepoint": 61701,
+      "source": "src/assets/vectors/clock.svg"
+    },
+    "icon-check": {
+      "codepoint": 61703,
+      "source": "src/assets/vectors/icon-check.svg"
+    },
+    "icon-round-back": {
+      "codepoint": 61698,
+      "source": "src/assets/vectors/icon-round-back.svg"
+    },
+    "icon-round-next": {
+      "codepoint": 61699,
+      "source": "src/assets/vectors/icon-round-next.svg"
+    },
+    "icon-star-blue": {
+      "codepoint": 61700,
+      "source": "src/assets/vectors/icon-star-blue.svg"
+    },
+    "icon-uncheck": {
+      "codepoint": 61704,
+      "source": "src/assets/vectors/icon-uncheck.svg"
+    },
+    "icon-white-edit": {
+      "codepoint": 61696,
+      "source": "src/assets/vectors/icon-white-edit.svg"
+    },
+    "icon-white-trash": {
+      "codepoint": 61697,
+      "source": "src/assets/vectors/icon-white-trash.svg"
+    },
+    "image": {
+      "codepoint": 61702,
+      "source": "src/assets/vectors/image.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": "fontcustom.yml",
+    "copyright": "",
+    "css3": false,
+    "css_selector": ".{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "fontcustom",
+    "force": false,
+    "input": {
+      "templates": "src/assets/vectors",
+      "vectors": "src/assets/vectors"
+    },
+    "no_hash": false,
+    "output": {
+      "css": "src/assets/fontcustom",
+      "fonts": "src/assets/fontcustom",
+      "preview": "src/assets"
+    },
+    "preprocessor_path": "",
+    "quiet": false,
+    "templates": [
+      "scss",
+      "preview"
+    ]
+  },
+  "templates": [
+    "src/assets/fontcustom/_fontcustom.scss",
+    "src/assets/fontcustom-preview.html"
+  ]
+}
