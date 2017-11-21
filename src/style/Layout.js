@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './index.scss';
 import './buttons.scss';
 import './labels.css';
-import './shared.css';
+import './shared.scss';
 import './antd-custom.scss';
 
 class Layout extends React.Component {
