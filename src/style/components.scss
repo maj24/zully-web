@@ -1,16 +1,66 @@
+.text-editor {
+  min-width: 800px;
+}
 .editor-header {
-  height: 68px;
-  padding: 16px;
+  min-height: 68px;
+  padding: 16px 20px;
   background-color: #fff;
   box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.5);
   margin: -15px -15px 10px -15px;
   display: flex;
 
+  .match-width {
+    width: 100%;
+  }
   .ql-toolbar.ql-snow {
     border: none;
     box-sizing: border-box;
     padding: 8px;
   }
+  .creator-container {
+    margin-left: 10px;
+    .creator-label {
+      //font-family: Lato;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+      text-align: left;
+      color: #a0a0a2;
+    }
+    .creator {
+      //font-family: Lato;
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      text-align: left;
+      color: #c2185b;
+    }
+  }
+  img {
+    width: 30px;
+    height: 30px;
+  }
+  #toolbar {
+    margin: auto;
+  }
+  .actions {
+    text-align: right;
+    margin-left: auto;
+
+    .save-btn {
+      margin-right: 26px;
+      height: 36px;
+    }
+    .close-icon {
+      font-size: 24px;
+      color: rgb(233, 234, 237);
+      font-weight: bold;
+      vertical-align: middle;
+    }
+    .close-icon:hover {
+      cursor: pointer !important;
+    }
+  }
+
 }
 
 
@@ -21,11 +71,13 @@
 
 .document {
   background-color: #fff;
-  margin: 40px;
   padding: 20px 50px 30px 50px;
   border-radius: 2px;
   box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.28);
   border: solid 0.5px #cccccc;
+  min-height: 900px;
+  max-width: 936px;
+  margin: 40px auto;
 
   .title {
     //font-family: Lato;

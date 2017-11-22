@@ -26,7 +26,7 @@ class CustomSider extends React.Component {
 
   render() {
     return (
-      <Sider theme="light" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
+      <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
         <div className="logo" />
         <div className="workspace">
           Yellowme

@@ -134,8 +134,8 @@ Issue.modules = {
  * See https://quilljs.com/docs/formats/
  */
 Issue.formats = [
-  'header', 'font', 'size',
+  'header', 'align', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image', 'color',
+  'link', 'image', 'color', 'video', 'code-block',
 ];
