@@ -8,6 +8,9 @@ const card = {
   text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips',
 };
 
+const collectionId = 1;
+const issueId = 2;
+
 class ProblemCard extends React.Component {
 
   render() {
@@ -17,6 +20,9 @@ class ProblemCard extends React.Component {
           <div className={'card-header'}>
             <div><p>{card.title}</p></div>
             <div className={'icons pull-right'}>
+              <Link to={`/collections/${collectionId}/issues/${issueId}`}>
+                <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
+              </Link>
               <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               <Icon type="edit" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
             </div>
