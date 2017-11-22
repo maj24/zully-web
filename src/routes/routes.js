@@ -4,12 +4,13 @@ import Login from './Login';
 import Main  from './Main';
 import GenericNotFound from './GenericNotFound';
 import Validation from './../utils/validation.js';
+import Collection from './Collection';
 
 export default {
   component: Layout,
   childRoutes: [
     {
-      childRoutes: [ Home ],
+      childRoutes: [ Home, Collection ],
     },
     {
       onEnter: Validation.redirectToDashboard,

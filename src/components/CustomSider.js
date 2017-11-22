@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Layout, Menu, Icon } from 'antd';
+import {ROUTES} from '../utils/constants';
 const { Sider } = Layout;
 
 const siderItems = [
@@ -18,7 +19,7 @@ class CustomSider extends React.Component {
   displaySiderItems() {
     return siderItems.map((siderItem, i) => {
       return <Menu.Item key={i}>
-        <Link to={siderItem.path}>{ siderItem.text }</Link>
+        <Link to={`${ROUTES.COLLECTIONS}/${i}`}>{ siderItem.text }</Link>
       </Menu.Item>;
     });
   }

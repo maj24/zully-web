@@ -1,8 +1,8 @@
-import App from './../../app/App';
 import Login from './../../app/landing/login/Login';
+import NakedApp from '../../app/NakedApp';
 
 module.exports = {
   path: '/login',
-  component: App,
+  component: NakedApp,
   indexRoute: { component: Login },
 };
