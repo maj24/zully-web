@@ -23,8 +23,9 @@ class ProblemCard extends React.Component {
               <Link to={`/collections/${collectionId}/issues/${issueId}`}>
                 <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               </Link>
-              <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
-              <Icon type="edit" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
+              <Link to={`/collections/${collectionId}/issues/${issueId}`}>
+                <Icon type="edit" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
+              </Link>
             </div>
           </div>
           <div className={'card-body'}>
