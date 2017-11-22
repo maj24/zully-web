@@ -6,6 +6,8 @@ import './buttons.scss';
 import './labels.css';
 import './shared.scss';
 import './antd-custom.scss';
+import 'react-quill/dist/quill.snow.css';
+import './components.scss';
 
 class Layout extends React.Component {
   render() {
