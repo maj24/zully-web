@@ -1,25 +1,40 @@
 import { browserHistory } from 'react-router';
-import { ROUTES } from './constants';
+import { ROUTES, STORAGE_KEY_TOKEN, STORAGE_KEY_USER, STORAGE_KEY_TEAM } from './constants';
+import Storage from './storage';
 
 require('babel-polyfill');
 
+const dummyResponse = {
+  user: {
+    username: 'huriata@gmail.com',
+    team_pk: '1',
+  },
+  token: '5bf453e35040c3c9f086d95bf0653d130ecad497',
+};
+
 class Auth {
 
-  login(email, password, cb) {
-    localStorage.app_token = 'true';
+  login(response) {
+    Storage.setJsonObject(STORAGE_KEY_TOKEN, dummyResponse.token);
+    Storage.setJsonObject(STORAGE_KEY_TEAM, dummyResponse.user.team_pk);
   }
 
-  logout(cb) {
-    delete localStorage.app_token;
+  logout() {
+    Storage.removeJsobObject(STORAGE_KEY_TOKEN);
+    Storage.removeJsobObject(STORAGE_KEY_USER);
     browserHistory.push(ROUTES.HOME);
   }
 
   getToken() {
-    return localStorage.app_token;
+    return Storage.getJsonObject(STORAGE_KEY_TOKEN);
+  }
+
+  getUser() {
+    return Storage.getJsonObject(STORAGE_KEY_USER);
   }
 
   loggedIn() {
-    return !!localStorage.app_token;
+    return Storage.getJsonObject(STORAGE_KEY_TOKEN) && !!this.getToken();
   }
 
 }

@@ -1,16 +1,29 @@
 /* eslint-disable no-undef */
+import auth from '../utils/auth.js';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 const env = runtimeEnv();
 const REACT_APP_API_ENDPOINT = env.REACT_APP_API_ENDPOINT;
+const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+
+function createHeaders() {
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  if (auth.loggedIn()) {
+    headers.append('Authorization', 'Token ' + auth.getToken());
+  }
+  return headers;
+}
+
 function search(endpoint, query, limit, page, sort, dir, cb) {
-  return fetch(`${REACT_APP_API_ENDPOINT}/${endpoint}?filter=${query}&limit=${limit}&page=${page}&sort=${sort}&dir=${dir}`, {
-    accept: 'application/json',
+  let url = `${REACT_APP_API_ENDPOINT}/${endpoint}?filter=${query}&limit=${limit}&page=${page}&sort=${sort}&dir=${dir}`;
+  return fetch(proxyurl + url, {
+    headers: createHeaders(),
   }).then(checkStatus)
     .then(parseJSON)
     .then(cb);
 }
 
-function get(endpoint, {id}, params, cb) {
+function get(endpoint, {id}, params) {
   let endpointID = id ? `/${id}` : '';
   let url = `${REACT_APP_API_ENDPOINT}/${endpoint}${endpointID}?`;
   for (let prop in params) {
@@ -18,30 +31,26 @@ function get(endpoint, {id}, params, cb) {
       url = `${url}${prop}=${params[prop]}&`;
     }
   }
-  return fetch(url, {
-    accept: 'application/json',
+  return fetch(proxyurl + url, {
+    headers: createHeaders(),
   }).then(checkStatus)
-    .then(parseJSON)
-    .then(cb);
+    .then(parseJSON);
 }
 
-function post(endpoint, data ,cb) {
-  return fetch(`${REACT_APP_API_ENDPOINT}/${endpoint}`, {
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
+function post(endpoint, data) {
+  let url = `${REACT_APP_API_ENDPOINT}/${endpoint}`;
+  return fetch(proxyurl + url, {
+    headers: createHeaders(),
     method: 'POST',
     body: JSON.stringify(data),
   }).then(checkStatus)
-    .then(parseJSON)
-    .then(cb);
+    .then(parseJSON);
 }
 
 function put(endpoint, data ,cb) {
-  return fetch(`${REACT_APP_API_ENDPOINT}/${endpoint}`, {
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
+  let url = `${REACT_APP_API_ENDPOINT}/${endpoint}`;
+  return fetch(proxyurl + url, {
+    headers: createHeaders(),
     method: 'PUT',
     body: JSON.stringify(data),
   }).then(checkStatus)

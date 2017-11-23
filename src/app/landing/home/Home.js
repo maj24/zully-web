@@ -1,16 +1,18 @@
 import React from 'react';
 import ProblemCard from '../../../components/ProblemCard';
 import { Tag } from 'antd';
+import CollectionService from '../../../api/CollectionService';
 const CheckableTag = Tag.CheckableTag;
 
 const cardItems = [
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
+  {name: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
 ];
+const teamId = 1;
 
 const tags = [ 'Tag1', 'Tag2', 'Tag3', 'Tag4' ];
 
@@ -18,8 +20,16 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      collections: [],
       selectedTags: [],
     };
+  }
+
+  componentDidMount() {
+    CollectionService.getTeamCollections(teamId).then(response => {
+      console.log(response);
+      this.setState({ collections: response.collections });
+    });
   }
 
   displayCards() {
