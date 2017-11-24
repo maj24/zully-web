@@ -3,39 +3,42 @@ import { Link } from 'react-router';
 import { Icon, Tag } from 'antd';
 import userIcon from './../assets/images/user-icon.png';
 
-const card = {
-  title: 'Arquitectura MVP',
-  text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips',
-};
-
-const collectionId = 1;
-const issueId = 2;
-
 class ProblemCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.displayTags = this.displayTags.bind(this);
+  }
+
+  displayTags() {
+    let {document} = this.props;
+    return document.tags.map((tag, i) => {
+      return <Tag color="#0f8ee9">{tag.name}</Tag>;
+    });
+  }
 
   render() {
+    const {document, collectionId} = this.props;
     return (
       <div className='col-md-4'>
         <div className="problem-card">
           <div className={'card-header'}>
-            <div><p>{card.title}</p></div>
+            <div><p>{document.name}</p></div>
             <div className={'icons pull-right'}>
-              <Link to={`/collections/${collectionId}/issues/${issueId}`}>
+              <Link to={`/collections/${collectionId}/issues/${document.pk}`}>
                 <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               </Link>
-              <Link to={`/collections/${collectionId}/issues/${issueId}`}>
+              <Link to={`/collections/${collectionId}/issues/${document.pk}`}>
                 <Icon type="edit" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               </Link>
             </div>
           </div>
           <div className={'card-body'}>
-            <p>{card.text}</p>
+            <p>{document.content}</p>
           </div>
           <div className="card-footer">
             <img src={userIcon} className={'user-image'}/>
             <div className={'tags-container'}>
-              <Tag color="#0f8ee9">Tag1</Tag>
-              <Tag color="#0f8ee9">Tag2</Tag>
+              {this.displayTags()}
             </div>
           </div>
         </div>

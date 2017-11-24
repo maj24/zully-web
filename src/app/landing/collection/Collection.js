@@ -1,16 +1,8 @@
 import React from 'react';
 import ProblemCard from '../../../components/ProblemCard';
 import { Tag } from 'antd';
+import DocumentService from '../../../api/DocumentService';
 const CheckableTag = Tag.CheckableTag;
-
-const cardItems = [
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-  {title: 'Arquitectura MVP', text: 'Lorem ipsum lorem ipsum lorem lor ipsumlorem ipsumlorem ipsum asd ipsumlorem ipsumlorem asd asd asd ipsumipsumlorem ipsumlorem asd ipsumipsumlorem ipsumlorem ips'},
-];
 
 const tags = [ 'Tag1', 'Tag2', 'Tag3', 'Tag4' ];
 
@@ -19,12 +11,46 @@ class Collection extends React.Component {
     super(props);
     this.state = {
       selectedTags: [],
+      documents: [],
+      tags: [],
     };
+    this.displayCards = this.displayCards.bind(this);
+    this.displayTags = this.displayTags.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.fetchDocuments = this.fetchDocuments.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({ collectionId: this.props.params.collectionId});
+    this.fetchDocuments();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === undefined) {
+      return false;
+    }
+
+    if (this.state.collectionId !== this.props.params.collectionId) {
+      this.fetchDocuments();
+      this.setState({collectionId: this.props.params.collectionId});
+    }
+  }
+
+  fetchDocuments() {
+    let collectionId = this.props.params.collectionId;
+    DocumentService.getCollectionDocuments(collectionId).then(response => {
+      console.log('documents -> ', response.documents);
+      this.setState({ documents: response.documents});
+    });
   }
 
   displayCards() {
-    return cardItems.map((item, i) => {
-      return <ProblemCard key={i}>
+    let documents = this.state.documents;
+    return documents.map((item, i) => {
+      return <ProblemCard
+        key={i}
+        document={item}
+        collectionId={this.props.params.collectionId}>
       </ProblemCard>;
     });
   }
@@ -35,6 +61,7 @@ class Collection extends React.Component {
     this.setState({ selectedTags: nextSelectedTags });
   }
 
+  // TODO: display collection tags
   displayTags() {
     let { selectedTags } = this.state;
     return tags.map(tag => {
@@ -48,6 +75,7 @@ class Collection extends React.Component {
     });
   }
 
+  // TODO: Add create document button
   render() {
     return (
       <div>
