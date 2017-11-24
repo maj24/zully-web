@@ -1,25 +1,61 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Layout, Menu, Icon } from 'antd';
 import {ROUTES} from '../utils/constants';
+import auth from '../utils/auth';
+import  CollectionService from '../api/CollectionService';
 const { Sider } = Layout;
 
-const siderItems = [
-  { text: 'Administración', path: '' },
-  { text: 'Desarrollo Móvil', path: '' },
-  { text: 'Desarrollo Web', path: '' },
-  { text: 'Diseño UI/UX', path: '' },
-  { text: 'Finanzas', path: '' },
-  { text: 'Soporte a Clientes', path: '' },
-  { text: 'Documentación', path: '' },
-];
-
 class CustomSider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      collections: [],
+      currentItem: '0',
+    };
+    this.handleMenuClick = this.handleMenuClick.bind(this);
+  }
+
+  componentDidMount() {
+    let teamId = auth.getTeam();
+    CollectionService.getTeamCollections(teamId).then(response => {
+      console.log('collections => ', response);
+      this.setState({ collections: response.collections});
+    });
+    let pathname = this.props.pathname;
+    pathname = pathname.split('/');
+    console.log('array', pathname);
+    if (pathname !== null && pathname.length >= 3) {
+      if (pathname[1] === 'collections') {
+        this.setState({
+          currentItem: pathname[2],
+        });
+      }
+    }
+    // browserHistory.listen((event)=>{
+    //   let pathname = event.pathname.split('/');
+    //   if (pathname != null && pathname.length >= 3) {
+    //     if (pathname[1] === 'collections') {
+    //       this.setState({
+    //         currentItem: pathname[2],
+    //       });
+    //     }
+    //   }
+    // });
+  }
+
+  handleMenuClick = (e) => {
+    console.log('click ', e);
+    this.setState({
+      currentItem: e.key,
+    });
+  };
 
   displaySiderItems() {
-    return siderItems.map((siderItem, i) => {
-      return <Menu.Item key={i}>
-        <Link to={`${ROUTES.COLLECTIONS}/${i}`}>{ siderItem.text }</Link>
+    let collections = this.state.collections;
+    return collections.map((collection, i) => {
+      return <Menu.Item key={collection.pk}>
+        <Link to={`${ROUTES.COLLECTIONS}/${collection.pk}`}>{ collection.name }</Link>
       </Menu.Item>;
     });
   }
@@ -31,7 +67,11 @@ class CustomSider extends React.Component {
         <div className="workspace">
           Yellowme
         </div>
-        <Menu mode="inline" defaultSelectedKeys={[ '0' ]}>
+        <Menu
+          mode="inline"
+          selectedKeys={[ this.state.currentItem ]}
+          onClick={this.handleMenuClick}
+        >
           { this.displaySiderItems() }
           <Menu.Item key="7">
             <Icon type="plus" />

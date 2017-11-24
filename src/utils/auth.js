@@ -33,6 +33,10 @@ class Auth {
     return Storage.getJsonObject(STORAGE_KEY_USER);
   }
 
+  getTeam() {
+    return Storage.getJsonObject(STORAGE_KEY_TEAM);
+  }
+
   loggedIn() {
     return Storage.getJsonObject(STORAGE_KEY_TOKEN) && !!this.getToken();
   }

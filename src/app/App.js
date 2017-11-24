@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <Layout className="app">
-        <CustomSider/>
+        <CustomSider pathname={this.props.location.pathname}/>
         <Layout style={{ marginLeft: 240 }}>
           <Content className="app-content">
             {this.props.children}
