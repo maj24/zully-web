@@ -8,8 +8,8 @@ module.exports = {
     return Api.post(`${API_ENDPOINT_TAGS}/create/${teamId}/`, data, {});
   },
 
-  getCollectionTags(teamId) {
-    return Api.get(`${API_ENDPOINT_TAGS}/list/${teamId}/`, {}, {});
+  getCollectionTags(collectionId) {
+    return Api.get(`collection/${API_ENDPOINT_TAGS}/list/${collectionId}/`, {}, {});
   },
 
 };

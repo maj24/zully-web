@@ -13,7 +13,7 @@ class CustomSider extends React.Component {
       collections: [],
       currentItem: '0',
     };
-    // this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleMenuClick = this.handleMenuClick.bind(this);
   }
 
   componentDidMount() {
@@ -34,25 +34,25 @@ class CustomSider extends React.Component {
       }
     }
 
-    browserHistory.listen((event)=>{
-      let pathname = event.pathname.split('/');
-      if (pathname != null && pathname.length >= 3) {
-        if (pathname[1] === 'collections') {
-          this.setState({
-            currentItem: pathname[2],
-          });
-        }
-      }
-    });
+    // browserHistory.listen((event)=>{
+    //   let pathname = event.pathname.split('/');
+    //   if (pathname != null && pathname.length >= 3) {
+    //     if (pathname[1] === 'collections') {
+    //       this.setState({
+    //         currentItem: pathname[2],
+    //       });
+    //     }
+    //   }
+    // });
   }
 
-  // handleMenuClick = (e) => {
-  //   console.log('click ', e);
-  //   browserHistory.push('/collections/' + e.key);
-  //   this.setState({
-  //     currentItem: e.key,
-  //   });
-  // };
+  handleMenuClick = (e) => {
+    console.log('click ', e);
+    browserHistory.push('/collections/' + e.key);
+    this.setState({
+      currentItem: e.key,
+    });
+  };
 
   displaySiderItems() {
     let collections = this.state.collections;
@@ -73,6 +73,7 @@ class CustomSider extends React.Component {
         <Menu
           mode="inline"
           selectedKeys={[ this.state.currentItem ]}
+          onClick={this.handleMenuClick}
         >
           { this.displaySiderItems() }
           <Menu.Item key="7">
