@@ -28,6 +28,8 @@ class Issue extends React.Component {
   }
 
   componentDidMount() {
+    console.log('did mount');
+    this.setState({ mode: this.props.location.query.mode});
     this.attachQuillRefs();
     let documentId = this.props.params.issueId;
     DocumentService.getDocument(documentId).then(response => {
@@ -43,6 +45,26 @@ class Issue extends React.Component {
     this.quillRef.enable(this.state.isEditMode);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps === undefined) {
+      return false;
+    }
+    if (this.state.mode !== this.props.location.query.mode) {
+      let document = this.state.document;
+      let tagsMapped = document.tags.map(function(tag) {
+        return tag.name;
+      });
+      console.log('if');
+      this.setState({
+        mode: this.props.location.query.mode,
+        isEditMode: this.props.location.query.mode === modes.edit,
+        editorHtml: document.content,
+        tags: tagsMapped,
+      });
+      this.quillRef.enable(this.props.location.query.mode === modes.edit);
+    }
+  }
+
   attachQuillRefs = () => {
     if (typeof this.reactQuillRef.getEditor !== 'function') {
       return;
@@ -51,8 +73,11 @@ class Issue extends React.Component {
   };
 
   handleChange(html) {
+    console.log('html->', html);
+    if (html.length > 20) {
+      this.setState({ editorHtml: html });
+    }
     this.setState({ editorHtml: html });
-    console.log(html);
   }
 
   handleTagRemoved = (removedTag) => {
@@ -62,14 +87,17 @@ class Issue extends React.Component {
   };
 
   showInput = () => {
+    console.log('show-input');
     this.setState({ inputVisible: true }, () => this.input.focus());
   };
 
   handleInputChange = (e) => {
+    console.log('handle input change');
     this.setState({ inputValue: e.target.value });
   };
 
   handleInputConfirm = () => {
+    console.log('handle input confirm');
     const state = this.state;
     const inputValue = state.inputValue;
     let tags = state.tags;
@@ -102,9 +130,14 @@ class Issue extends React.Component {
 
   render() {
     const { document, inputVisible, inputValue, isEditMode } = this.state;
+    const {collectionId, issueId} = this.props.params;
     return (
       <div className="text-editor">
-        <EditorHeader isEditMode={this.state.isEditMode}/>
+        <EditorHeader
+          isEditMode={this.state.isEditMode}
+          collectionId={collectionId}
+          issueId={issueId}
+        />
         <div className="document">
           <div className="document-header">
             <p className="title">{document.name}</p>
