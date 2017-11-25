@@ -11,7 +11,7 @@ body {
 }
 
 .app-content {
-  margin: 15px;
+  margin: 15px 30px;
 }
 
 .tags-header {
@@ -48,6 +48,7 @@ body {
       size: 16px;
       color: #000000;
       font-weight: 500;
+      white-space: nowrap;
     }
   }
 

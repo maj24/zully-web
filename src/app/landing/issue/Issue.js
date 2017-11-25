@@ -2,11 +2,7 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import EditorHeader from '../../../components/EditorHeader';
 import {Tag, Input, Tooltip, Button} from 'antd';
-
-const dummyIssue = {
-  title: 'Arquitecura MVP',
-  html: '<p><strong>Quill Rich Text Editor</strong></p><p><br></p><p>Quill is a free, open source WYSIWYG editor built for the modern web. With its extensible architecture and a expressive API you can completely customize it to fulfill your needs. Some built in features include:</p><p><br></p><p>\t- Fast and lightweight</p><p>\t- Semantic markup</p><p>\t- Standardized HTML between browsers</p><p>\t- Cross browser support including Chrome, Firefox, Safari, and IE 9+</p><p><br></p><p><strong>Downloads</strong></p><p><br></p><p>\t- Quill.js, the free, open source WYSIWYG editor</p><p>\t- React-quill, a React component that wraps Quill.js</p>',
-};
+import DocumentService from '../../../api/DocumentService';
 
 const modes = {
   view: '1',
@@ -18,25 +14,48 @@ class Issue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorHtml: '',
-      tags: [ 'Tag 1', 'Tag 2' ],
-      inputVisible: false,
-      inputValue: '',
+      document: {},
+      editorHtml: '', // html
+      tags: [],
+      inputVisible: false, // tag input
+      inputValue: '', // tag input
       isEditMode: this.props.location.query.mode === modes.edit,
     };
+    this.quillRef = null;      // Quill instance
+    this.reactQuillRef = null; // ReactQuill component
     this.handleChange = this.handleChange.bind(this);
+    this.displayTags = this.displayTags.bind(this);
   }
 
   componentDidMount() {
-    this.handleChange(dummyIssue.html);
+    this.attachQuillRefs();
+    let documentId = this.props.params.issueId;
+    DocumentService.getDocument(documentId).then(response => {
+      let tagsMapped = response.tags.map(function(tag) {
+        return tag.name;
+      });
+      this.setState({
+        document: response,
+        tags: tagsMapped,
+        editorHtml: response.content,
+      });
+    });
+    this.quillRef.enable(this.state.isEditMode);
   }
+
+  attachQuillRefs = () => {
+    if (typeof this.reactQuillRef.getEditor !== 'function') {
+      return;
+    }
+    this.quillRef = this.reactQuillRef.getEditor();
+  };
 
   handleChange(html) {
     this.setState({ editorHtml: html });
     console.log(html);
   }
 
-  handleClose = (removedTag) => {
+  handleTagRemoved = (removedTag) => {
     const tags = this.state.tags.filter(tag => tag !== removedTag);
     console.log(tags);
     this.setState({ tags });
@@ -65,29 +84,34 @@ class Issue extends React.Component {
     });
   };
 
+  displayTags() {
+    let {tags, isEditMode} = this.state;
+    return tags.map((tag, index) => {
+      const isLongTag = tag.length > 20;
+      const tagElem = (
+        <Tag key={index} color="#0f8ee9" closable={isEditMode} afterClose={() => this.handleTagRemoved(tag)}>
+          {isLongTag ? `${tag.slice(0, 15)}...` : tag}
+        </Tag>
+      );
+      return isLongTag ? <Tooltip title={tag} key={index}>{tagElem}</Tooltip> : tagElem;
+    });
+  }
+
   saveInputRef = input => this.input = input;
 
 
   render() {
-    const { tags, inputVisible, inputValue } = this.state;
+    const { document, inputVisible, inputValue, isEditMode } = this.state;
     return (
       <div className="text-editor">
         <EditorHeader isEditMode={this.state.isEditMode}/>
         <div className="document">
           <div className="document-header">
-            <p className="title">Arquitectura MVP</p>
-            <p className="subtitle">Actualizado: 13/11/2017</p>
+            <p className="title">{document.name}</p>
+            <p className="subtitle">Actualizado: {document.updated_at}</p>
             <div className="tags-container">
-              {tags.map((tag, index) => {
-                const isLongTag = tag.length > 20;
-                const tagElem = (
-                  <Tag key={tag} color="#0f8ee9" closable={true} afterClose={() => this.handleClose(tag)}>
-                    {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-                  </Tag>
-                );
-                return isLongTag ? <Tooltip title={tag} key={tag}>{tagElem}</Tooltip> : tagElem;
-              })}
-              {inputVisible && (
+              {this.displayTags()}
+              {inputVisible &&  isEditMode && (
                 <Input
                   ref={this.saveInputRef}
                   type="text"
@@ -99,11 +123,12 @@ class Issue extends React.Component {
                   onPressEnter={this.handleInputConfirm}
                 />
               )}
-              {!inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ New Tag</Button>}
+              {isEditMode && !inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ New Tag</Button>}
             </div>
           </div>
           <div className="separator"/>
           <ReactQuill
+            ref={(el) => { this.reactQuillRef = el; }}
             onChange={this.handleChange}
             placeholder={'Write something...'}
             modules={Issue.modules}

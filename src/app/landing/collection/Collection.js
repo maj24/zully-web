@@ -3,6 +3,7 @@ import ProblemCard from '../../../components/ProblemCard';
 import { Tag } from 'antd';
 import DocumentService from '../../../api/DocumentService';
 import TagService from '../../../api/TagService';
+import _ from 'lodash';
 const CheckableTag = Tag.CheckableTag;
 
 class Collection extends React.Component {
@@ -49,7 +50,11 @@ class Collection extends React.Component {
     let collectionId = this.props.params.collectionId;
     TagService.getCollectionTags(collectionId).then(response => {
       console.log('tags -> ', response.tags);
-      this.setState({ tags: response.tags});
+      let tagsMapped = response.tags.map(function(tag) {
+        return tag.name;
+      });
+      tagsMapped = _.uniq(tagsMapped);
+      this.setState({ tags: tagsMapped});
     });
   }
 
@@ -72,13 +77,13 @@ class Collection extends React.Component {
 
   displayTags() {
     let { selectedTags, tags } = this.state;
-    return tags.map(tag => {
+    return tags.map((tag, index) => {
       return <CheckableTag
-        key={tag.pk}
+        key={index}
         checked={selectedTags.indexOf(tag) > -1}
         onChange={checked => this.handleTagChange(tag, checked)}
       >
-        {tag.name}
+        {tag}
       </CheckableTag>;
     });
   }
@@ -88,12 +93,12 @@ class Collection extends React.Component {
     return (
       <div>
         <div className={'tags-header'}>
-          <strong style={{ marginRight: 8, fontSize: 14 }}>Categories:</strong>
+          <strong style={{ marginRight: 8, fontSize: 14 }}>Categorías:</strong>
           <div className={'tags-container'}>
             {this.displayTags()}
           </div>
         </div>
-        <div>
+        <div className="row">
           {this.displayCards()}
         </div>
       </div>

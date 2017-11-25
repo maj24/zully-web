@@ -13,7 +13,7 @@ class ProblemCard extends React.Component {
   displayTags() {
     let {document} = this.props;
     return document.tags.map((tag, i) => {
-      return <Tag color="#0f8ee9">{tag.name}</Tag>;
+      return <Tag key={tag.pk} color="#0f8ee9">{tag.name}</Tag>;
     });
   }
 
