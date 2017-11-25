@@ -11,6 +11,7 @@ class EditorHeader extends React.Component {
   }
 
   render() {
+    const {isEditMode} = this.props;
     return (
       <div className="editor-header">
         <div className="flex match-width">
@@ -21,9 +22,12 @@ class EditorHeader extends React.Component {
               <p className="creator">Majo Patron</p>
             </div>
           </div>
-          <Toolbar/>
+          <Toolbar isEditMode={isEditMode}/>
           <div className="actions pull-right">
-            <Button className="save-btn" type="primary">Guardar</Button>
+            { isEditMode ?
+              <Button className="save-btn" type="primary">Guardar</Button> :
+              <Button className="save-btn" type="primary" ghost>Editar</Button>
+            }
             <Icon className="close-icon" type="close" />
           </div>
         </div>

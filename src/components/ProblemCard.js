@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Icon, Tag } from 'antd';
 import userIcon from './../assets/images/user-icon.png';
 
+
 class ProblemCard extends React.Component {
   constructor(props) {
     super(props);
@@ -24,10 +25,10 @@ class ProblemCard extends React.Component {
           <div className={'card-header'}>
             <div><p>{document.name}</p></div>
             <div className={'icons pull-right'}>
-              <Link to={`/collections/${collectionId}/issues/${document.pk}`}>
+              <Link to={`/collections/${collectionId}/issues/${document.pk}?mode=1`}>
                 <Icon type="eye" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               </Link>
-              <Link to={`/collections/${collectionId}/issues/${document.pk}`}>
+              <Link to={`/collections/${collectionId}/issues/${document.pk}?mode=2`}>
                 <Icon type="edit" style={{ fontSize: 18, color: '#82858d', margin: '5px' }}/>
               </Link>
             </div>

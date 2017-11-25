@@ -8,6 +8,11 @@ const dummyIssue = {
   html: '<p><strong>Quill Rich Text Editor</strong></p><p><br></p><p>Quill is a free, open source WYSIWYG editor built for the modern web. With its extensible architecture and a expressive API you can completely customize it to fulfill your needs. Some built in features include:</p><p><br></p><p>\t- Fast and lightweight</p><p>\t- Semantic markup</p><p>\t- Standardized HTML between browsers</p><p>\t- Cross browser support including Chrome, Firefox, Safari, and IE 9+</p><p><br></p><p><strong>Downloads</strong></p><p><br></p><p>\t- Quill.js, the free, open source WYSIWYG editor</p><p>\t- React-quill, a React component that wraps Quill.js</p>',
 };
 
+const modes = {
+  view: '1',
+  edit: '2',
+};
+
 class Issue extends React.Component {
 
   constructor(props) {
@@ -17,6 +22,7 @@ class Issue extends React.Component {
       tags: [ 'Tag 1', 'Tag 2' ],
       inputVisible: false,
       inputValue: '',
+      isEditMode: this.props.location.query.mode === modes.edit,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -66,7 +72,7 @@ class Issue extends React.Component {
     const { tags, inputVisible, inputValue } = this.state;
     return (
       <div className="text-editor">
-        <EditorHeader/>
+        <EditorHeader isEditMode={this.state.isEditMode}/>
         <div className="document">
           <div className="document-header">
             <p className="title">Arquitectura MVP</p>
