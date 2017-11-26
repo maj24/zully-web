@@ -12,6 +12,7 @@ class EditorHeader extends React.Component {
     super(props);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.handleExit = this.handleExit.bind(this);
   }
 
   handleClickEdit() {
@@ -23,25 +24,30 @@ class EditorHeader extends React.Component {
     this.props.saveDocument();
   }
 
+  handleExit() {
+    browserHistory.push(`${ROUTES.COLLECTIONS}/${this.props.collectionId}/`);
+  }
+
   render() {
-    const {isEditMode} = this.props;
+    const {isEditMode, creator} = this.props;
+    console.log('creator', creator);
     return (
       <div className="editor-header">
         <div className="flex match-width">
-          <div className="owner flex">
+          { creator !== undefined && <div className="owner flex">
             <img src={userIcon} className={'user-image'}/>
             <div className="creator-container">
               <p className="creator-label">Creado por:</p>
-              <p className="creator">Majo Patron</p>
+              <p className="creator">{creator.name}</p>
             </div>
-          </div>
+          </div> }
           <Toolbar isEditMode={isEditMode}/>
           <div className="actions pull-right">
             { isEditMode ?
               <Button className="save-btn" type="primary" onClick={this.handleClickSave}>Guardar</Button> :
               <Button className="save-btn" type="primary" ghost onClick={this.handleClickEdit}>Editar</Button>
             }
-            <Icon className="close-icon" type="close" />
+            <Icon className="close-icon" type="close" onClick={this.handleExit} />
           </div>
         </div>
       </div>

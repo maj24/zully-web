@@ -1,8 +1,10 @@
 import React from 'react';
 import ProblemCard from '../../../components/ProblemCard';
-import { Tag } from 'antd';
+import { Tag, Button } from 'antd';
+import { browserHistory } from 'react-router';
 import DocumentService from '../../../api/DocumentService';
 import TagService from '../../../api/TagService';
+import {ROUTES} from '../../../utils/constants';
 import _ from 'lodash';
 const CheckableTag = Tag.CheckableTag;
 
@@ -18,6 +20,7 @@ class Collection extends React.Component {
     this.displayTags = this.displayTags.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
     this.fetchDocuments = this.fetchDocuments.bind(this);
+    this.handleClickCreate = this.handleClickCreate.bind(this);
   }
 
   componentWillMount() {
@@ -88,14 +91,20 @@ class Collection extends React.Component {
     });
   }
 
-  // TODO: Add create document button
+  handleClickCreate() {
+    browserHistory.push(`${ROUTES.COLLECTIONS}/${this.props.params.collectionId}${ROUTES.DOCUMENTS}?mode=2`);
+  }
+
   render() {
     return (
       <div>
         <div className={'tags-header'}>
-          <strong style={{ marginRight: 8, fontSize: 14 }}>Categorías:</strong>
+          { this.state.tags.length > 0 && <strong style={{ marginRight: 8, fontSize: 14 }}>Etiquetas:</strong>}
           <div className={'tags-container'}>
             {this.displayTags()}
+          </div>
+          <div className="create-btn pull-right">
+            <Button className="" type="primary" ghost onClick={this.handleClickCreate}>Nuevo</Button>
           </div>
         </div>
         <div className="row">

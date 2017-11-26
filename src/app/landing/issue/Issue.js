@@ -5,6 +5,7 @@ import {Tag, Input, Tooltip, Button} from 'antd';
 import DocumentService from '../../../api/DocumentService';
 import { browserHistory } from 'react-router';
 import {ROUTES} from '../../../utils/constants';
+import auth from '../../../utils/auth';
 
 const modes = {
   view: '1',
@@ -17,11 +18,13 @@ class Issue extends React.Component {
     super(props);
     this.state = {
       document: {},
+      inputTitleValue: '',
       editorHtml: '', // html
       tags: [],
       inputVisible: false, // tag input
       inputValue: '', // tag input
       isEditMode: this.props.location.query.mode === modes.edit,
+      documentId: this.props.params.issueId,
     };
     this.quillRef = null;      // Quill instance
     this.reactQuillRef = null; // ReactQuill component
@@ -35,16 +38,21 @@ class Issue extends React.Component {
     this.setState({ mode: this.props.location.query.mode});
     this.attachQuillRefs();
     let documentId = this.props.params.issueId;
-    DocumentService.getDocument(documentId).then(response => {
-      let tagsMapped = response.tags.map(function(tag) {
-        return tag.name;
+    // TODO: if param issueId
+    if (documentId !== undefined) {
+      DocumentService.getDocument(documentId).then(response => {
+        let tagsMapped = response.tags.map(function(tag) {
+          return tag.name;
+        });
+        this.setState({
+          document: response,
+          tags: tagsMapped,
+          editorHtml: response.contentHtml,
+        });
       });
-      this.setState({
-        document: response,
-        tags: tagsMapped,
-        editorHtml: response.content,
-      });
-    });
+    } else {
+      console.log('new document');
+    }
     this.quillRef.enable(this.state.isEditMode);
   }
 
@@ -61,7 +69,7 @@ class Issue extends React.Component {
       this.setState({
         mode: this.props.location.query.mode,
         isEditMode: this.props.location.query.mode === modes.edit,
-        editorHtml: document.content,
+        editorHtml: document.contentHtml,
         tags: tagsMapped,
       });
       this.quillRef.enable(this.props.location.query.mode === modes.edit);
@@ -71,17 +79,32 @@ class Issue extends React.Component {
   saveDocument() {
     let {collectionId, issueId} = this.props.params;
     let newDocument = {
-      content: this.state.editorHtml,
-      name: this.state.document.name,
-      collectionId,
+      contentHtml: this.state.editorHtml,
+      contentText: this.quillRef.getText(),
+      name: issueId === undefined ? this.state.inputTitleValue : this.state.document.name,
+      collection_id: collectionId,
       tags: this.state.tags,
     };
     console.log('request', newDocument);
-    console.log('text', this.quillRef.getText());
-    // DocumentService.update(newDocument, issueId).then(response => {
-    console.log('saveDocument');
-    browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${issueId}?mode=1`);
-    // });
+    if (issueId !== undefined) {
+      DocumentService.update(newDocument, issueId).then(response => {
+        console.log('saveDocument');
+        this.setState({
+          document: response,
+        });
+        browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${issueId}?mode=1`);
+      });
+    } else {
+      newDocument.token = auth.getToken();
+      console.log('request', newDocument);
+      DocumentService.create(newDocument).then(response => {
+        this.setState({
+          document: response,
+          documentId: response.pk,
+        });
+        browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${response.pk}?mode=1`);
+      });
+    }
   }
 
   attachQuillRefs = () => {
@@ -110,7 +133,11 @@ class Issue extends React.Component {
     this.setState({ inputVisible: true }, () => this.input.focus());
   };
 
-  handleInputChange = (e) => {
+  handleInputTitleChange = (e) => {
+    this.setState({ inputTitleValue: e.target.value });
+  };
+
+  handleInputTagChange = (e) => {
     console.log('handle input change');
     this.setState({ inputValue: e.target.value });
   };
@@ -148,7 +175,7 @@ class Issue extends React.Component {
 
 
   render() {
-    const { document, inputVisible, inputValue, isEditMode } = this.state;
+    const { document, inputTextValue, inputVisible, inputValue, isEditMode, documentId } = this.state;
     const {collectionId, issueId} = this.props.params;
     return (
       <div className="text-editor">
@@ -157,11 +184,20 @@ class Issue extends React.Component {
           collectionId={collectionId}
           issueId={issueId}
           saveDocument={this.saveDocument}
+          creator={document.creator}
         />
         <div className="document">
           <div className="document-header">
-            <p className="title">{document.name}</p>
-            <p className="subtitle">Actualizado: {document.updated_at}</p>
+            { documentId !== undefined ?
+              <p className="title">{document.name}</p> :
+              <Input
+                disabled={false}
+                onChange={this.handleInputTitleChange}
+                placeholder={"Título..."}
+                className="input-title"
+              />
+            }
+            { documentId !== undefined && <p className="subtitle">Actualizado: {document.updated_at}</p> }
             <div className="tags-container">
               {this.displayTags()}
               {inputVisible &&  isEditMode && (
@@ -171,7 +207,7 @@ class Issue extends React.Component {
                   size="small"
                   style={{ width: 78 }}
                   value={inputValue}
-                  onChange={this.handleInputChange}
+                  onChange={this.handleInputTagChange}
                   onBlur={this.handleInputConfirm}
                   onPressEnter={this.handleInputConfirm}
                 />

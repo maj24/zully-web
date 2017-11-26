@@ -34,7 +34,7 @@ class ProblemCard extends React.Component {
             </div>
           </div>
           <div className={'card-body'}>
-            <p>{document.content}</p>
+            <p>{document.contentText}</p>
           </div>
           <div className="card-footer">
             <img src={userIcon} className={'user-image'}/>

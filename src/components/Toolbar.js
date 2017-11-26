@@ -2,10 +2,6 @@ import React from 'react';
 
 class Toolbar extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const displayStyle = !this.props.isEditMode ? {display: 'none'} : {};
     return (
