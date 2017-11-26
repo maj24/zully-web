@@ -11,11 +11,16 @@ class EditorHeader extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   handleClickEdit() {
     const {collectionId, issueId} = this.props;
     browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${issueId}?mode=2`);
+  }
+
+  handleClickSave() {
+    this.props.saveDocument();
   }
 
   render() {
@@ -33,7 +38,7 @@ class EditorHeader extends React.Component {
           <Toolbar isEditMode={isEditMode}/>
           <div className="actions pull-right">
             { isEditMode ?
-              <Button className="save-btn" type="primary">Guardar</Button> :
+              <Button className="save-btn" type="primary" onClick={this.handleClickSave}>Guardar</Button> :
               <Button className="save-btn" type="primary" ghost onClick={this.handleClickEdit}>Editar</Button>
             }
             <Icon className="close-icon" type="close" />

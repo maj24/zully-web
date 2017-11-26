@@ -3,6 +3,8 @@ import ReactQuill from 'react-quill';
 import EditorHeader from '../../../components/EditorHeader';
 import {Tag, Input, Tooltip, Button} from 'antd';
 import DocumentService from '../../../api/DocumentService';
+import { browserHistory } from 'react-router';
+import {ROUTES} from '../../../utils/constants';
 
 const modes = {
   view: '1',
@@ -25,6 +27,7 @@ class Issue extends React.Component {
     this.reactQuillRef = null; // ReactQuill component
     this.handleChange = this.handleChange.bind(this);
     this.displayTags = this.displayTags.bind(this);
+    this.saveDocument = this.saveDocument.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +66,22 @@ class Issue extends React.Component {
       });
       this.quillRef.enable(this.props.location.query.mode === modes.edit);
     }
+  }
+
+  saveDocument() {
+    let {collectionId, issueId} = this.props.params;
+    let newDocument = {
+      content: this.state.editorHtml,
+      name: this.state.document.name,
+      collectionId,
+      tags: this.state.tags,
+    };
+    console.log('request', newDocument);
+    console.log('text', this.quillRef.getText());
+    // DocumentService.update(newDocument, issueId).then(response => {
+    console.log('saveDocument');
+    browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${issueId}?mode=1`);
+    // });
   }
 
   attachQuillRefs = () => {
@@ -137,6 +156,7 @@ class Issue extends React.Component {
           isEditMode={this.state.isEditMode}
           collectionId={collectionId}
           issueId={issueId}
+          saveDocument={this.saveDocument}
         />
         <div className="document">
           <div className="document-header">

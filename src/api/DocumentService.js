@@ -16,4 +16,8 @@ module.exports = {
     return Api.get(`document/${documentId}/`, {}, {});
   },
 
+  update(data, documentId) {
+    return Api.post(`document/${documentId}/`, data, {});
+  },
+
 };
