@@ -43,10 +43,12 @@ class Collection extends React.Component {
 
   fetchDocuments() {
     let collectionId = this.props.params.collectionId;
-    DocumentService.getCollectionDocuments(collectionId).then(response => {
-      console.log('documents -> ', response.documents);
-      this.setState({ documents: response.documents});
-    });
+    if (collectionId !== undefined) {
+      DocumentService.getCollectionDocuments(collectionId).then(response => {
+        console.log('documents -> ', response.documents);
+        this.setState({ documents: response.documents});
+      });
+    }
   }
 
   fetchTags() {

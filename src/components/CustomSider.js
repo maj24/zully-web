@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Input } from 'antd';
+const Search = Input.Search;
 import {ROUTES} from '../utils/constants';
 import auth from '../utils/auth';
 import  CollectionService from '../api/CollectionService';
@@ -14,6 +15,7 @@ class CustomSider extends React.Component {
       currentItem: '0',
     };
     this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
@@ -63,11 +65,23 @@ class CustomSider extends React.Component {
     });
   }
 
+  handleSearch = (value) => {
+    console.log('handle search', value);
+    browserHistory.push(`${ROUTES.COLLECTIONS}?query=${value}`);
+  };
+
   render() {
     return (
       <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
         <div className="logo" />
-        <div className="workspace">
+        <div className="search">
+          <Search
+            placeholder="¿Qué problema tienes?"
+            style={{ width: 200 }}
+            onSearch={this.handleSearch}
+          />
+        </div>
+        <div className="team">
           Yellowme
         </div>
         <Menu
