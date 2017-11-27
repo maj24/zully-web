@@ -17,12 +17,32 @@ class CollectionCards extends React.Component {
 
   displayCards() {
     let documents = this.props.documents;
+    let selectedTags = this.state.selectedTags;
     return documents.map((item, i) => {
-      return <ProblemCard
-        key={i}
-        document={item}
-        collectionId={this.props.collection.pk}>
-      </ProblemCard>;
+      if (selectedTags.length > 0) {
+        let tagsMapped = item.tags.map(function(tag) {
+          return tag.name;
+        });
+        let selected = false;
+        for (let tag of tagsMapped) {
+          if (selectedTags.indexOf(tag) > -1) {
+            selected = true;
+          }
+        }
+        if (selected === true) {
+          return <ProblemCard
+            key={i}
+            document={item}
+            collectionId={this.props.collection.pk}>
+          </ProblemCard>;
+        }
+      } else {
+        return <ProblemCard
+          key={i}
+          document={item}
+          collectionId={this.props.collection.pk}>
+        </ProblemCard>;
+      }
     });
   }
 
