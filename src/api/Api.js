@@ -25,7 +25,7 @@ function search(endpoint, query, limit, page, sort, dir, cb) {
 
 function get(endpoint, {id}, params) {
   let endpointID = id ? `/${id}` : '';
-  let url = `${REACT_APP_API_ENDPOINT}/${endpoint}${endpointID}?`;
+  let url = `${REACT_APP_API_ENDPOINT}/${endpoint}${endpointID}`;
   for (let prop in params) {
     if (params.hasOwnProperty(prop)) {
       url = `${url}${prop}=${params[prop]}&`;

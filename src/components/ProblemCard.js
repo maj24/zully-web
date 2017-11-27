@@ -12,9 +12,11 @@ class ProblemCard extends React.Component {
 
   displayTags() {
     let {document} = this.props;
-    return document.tags.map((tag, i) => {
-      return <Tag key={tag.pk} color="#0f8ee9">{tag.name}</Tag>;
-    });
+    if (document.tags !== undefined) {
+      return document.tags.map((tag, i) => {
+        return <Tag key={tag.pk} color="#0f8ee9">{tag.name}</Tag>;
+      });
+    }
   }
 
   render() {

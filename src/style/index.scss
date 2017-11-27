@@ -40,6 +40,32 @@ body {
 
 .app-content {
   margin: 15px 30px;
+  font-family: 'Lato', sans-serif;
+}
+
+.search-by {
+  display: flex;
+  //font-family: Lato;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  text-align: left;
+  color: #a0a0a2;
+  margin-bottom: 20px;
+}
+
+.query {
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.collection-name {
+  font-family: 'Lato', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  text-align: left;
+  color: #e91e63;
 }
 
 .tags-header {
@@ -90,9 +116,11 @@ body {
     display: flex;
 
     p {
+      font-family: 'Lato', sans-serif;
       size: 16px;
       color: #000000;
-      font-weight: 500;
+      font-weight: bold;
+      letter-spacing: 0.3px;
       white-space: nowrap;
     }
   }
@@ -141,5 +169,38 @@ body {
 
   .ant-tag {
     margin-bottom: 5px;
+  }
+}
+
+.floating-btn {
+  position: fixed;
+  right: 40px;
+  bottom: 30px;
+  height: 42px;
+  text-align: right;
+
+  .ant-btn{
+    box-shadow: 2px 2px 3px #999;
+  }
+  .ant-btn-circle.ant-btn-lg, .ant-btn-circle-outline.ant-btn-lg {
+    width: 46px;
+    font-size: 16px;
+    height: 46px;
+  }
+  .anticon {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #e91e63;
+    border-color: #e91e63;
+  }
+  .ant-btn-primary {
+    background-color: #c2185b;
+    border-color: #c2185b;
+  }
+  .ant-btn-primary:active, .ant-btn-primary.active{
+    background-color: #c2185b;
+    border-color: #c2185b;
   }
 }

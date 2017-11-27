@@ -20,4 +20,8 @@ module.exports = {
     return Api.post(`document/${documentId}/`, data, {});
   },
 
+  search(teamId, query) {
+    return Api.get(`search/${teamId}/?query=${query}`, {}, {});
+  },
+
 };
