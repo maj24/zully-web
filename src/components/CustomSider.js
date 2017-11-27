@@ -6,6 +6,7 @@ import {ROUTES} from '../utils/constants';
 import auth from '../utils/auth';
 import  CollectionService from '../api/CollectionService';
 const { Sider } = Layout;
+import userIcon from './../assets/images/user-icon.png';
 
 class CustomSider extends React.Component {
   constructor(props) {
@@ -72,30 +73,38 @@ class CustomSider extends React.Component {
 
   render() {
     return (
-      <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
-        <div className="logo" />
-        <div className="search">
-          <Search
-            placeholder="¿Qué problema tienes?"
-            style={{ width: 200 }}
-            onSearch={this.handleSearch}
-          />
-        </div>
-        <div className="team">
-          Yellowme
-        </div>
-        <Menu
-          mode="inline"
-          selectedKeys={[ this.state.currentItem ]}
-          onClick={this.handleMenuClick}
-        >
-          { this.displaySiderItems() }
-          <Menu.Item key="7">
-            <Icon type="plus" />
-            <span className="nav-text">Agregar Colección</span>
-          </Menu.Item>
-        </Menu>
-      </Sider>
+      <div>
+        <Sider className="sider" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
+          <div className="logo" />
+          <div className="search">
+            <Search
+              placeholder="¿Qué problema tienes?"
+              style={{ width: 200 }}
+              onSearch={this.handleSearch}
+            />
+          </div>
+          <div className="team">
+            Yellowme
+          </div>
+          <Menu
+            mode="inline"
+            selectedKeys={[ this.state.currentItem ]}
+            onClick={this.handleMenuClick}
+          >
+            { this.displaySiderItems() }
+            <Menu.Item key="7">
+              <Icon type="plus" />
+              <span className="nav-text add-collection">Agregar Colección</span>
+            </Menu.Item>
+          </Menu>
+          <div className="flex user">
+            <img src={userIcon} className={'user-image'}/>
+            <div className="creator-container">
+              <p>Huriata Bonilla</p>
+            </div>
+          </div>
+        </Sider>
+      </div>
     );
   }
 }
