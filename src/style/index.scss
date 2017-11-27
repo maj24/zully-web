@@ -156,15 +156,15 @@ body {
     font-size: 20px;
   }
   .ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #c2185b;
+    border-color: #c2185b;
+  }
+  .ant-btn-primary {
     background-color: #e91e63;
     border-color: #e91e63;
   }
-  .ant-btn-primary {
-    background-color: #c2185b;
-    border-color: #c2185b;
-  }
   .ant-btn-primary:active, .ant-btn-primary.active{
-    background-color: #c2185b;
-    border-color: #c2185b;
+    background-color: #e91e63;
+    border-color: #e91e63;
   }
 }

@@ -14,6 +14,7 @@ class CustomSider extends React.Component {
     this.state = {
       collections: [],
       currentItem: '0',
+      inputVisible: false,
     };
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -51,10 +52,14 @@ class CustomSider extends React.Component {
 
   handleMenuClick = (e) => {
     console.log('click ', e);
-    browserHistory.push('/collections/' + e.key);
-    this.setState({
-      currentItem: e.key,
-    });
+    if (e.key !== 'add') {
+      browserHistory.push('/collections/' + e.key);
+      this.setState({
+        currentItem: e.key,
+      });
+    } else {
+      this.setState({ inputVisible: true }, () => this.input.focus());
+    }
   };
 
   displaySiderItems() {
@@ -71,7 +76,35 @@ class CustomSider extends React.Component {
     browserHistory.push(`${ROUTES.COLLECTIONS}?query=${value}`);
   };
 
+  handleInputChange = (e) => {
+    this.setState({ inputValue: e.target.value });
+  };
+
+  handleInputConfirm = () => {
+    console.log('handle input confirm');
+    const inputValue = this.state.inputValue;
+    let teamId = auth.getTeam();
+    CollectionService.create(
+      { name: inputValue },
+      teamId
+    ).then(response => {
+      console.log('response->', response);
+      this.fetchCollections(teamId);
+    });
+    this.setState({inputVisible: false});
+  };
+
+  fetchCollections(teamId) {
+    CollectionService.getTeamCollections(teamId).then(response => {
+      console.log('collections => ', response);
+      this.setState({ collections: response.collections});
+    });
+  }
+
+  saveInputRef = input => this.input = input;
+
   render() {
+    const { inputVisible } = this.state;
     return (
       <div>
         <Sider className="sider" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
@@ -92,11 +125,25 @@ class CustomSider extends React.Component {
             onClick={this.handleMenuClick}
           >
             { this.displaySiderItems() }
-            <Menu.Item key="7">
-              <Icon type="plus" />
-              <span className="nav-text add-collection">Agregar Colección</span>
-            </Menu.Item>
+            {!inputVisible &&
+              <Menu.Item key={'add'}>
+                <Icon type="plus" />
+                <span className="nav-text add-collection">Agregar Colección</span>
+              </Menu.Item>
+            }
           </Menu>
+          {inputVisible &&
+            <div className="input-add">
+              <Input
+                ref={this.saveInputRef}
+                type="text"
+                size="small"
+                onChange={this.handleInputChange}
+                onPressEnter={this.handleInputConfirm}
+                placeholder={'Nombre'}
+              />
+            </div>
+          }
           <div className="flex user">
             <img src={userIcon} className={'user-image'}/>
             <div className="creator-container">
