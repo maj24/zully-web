@@ -18,6 +18,7 @@ class CustomSider extends React.Component {
     };
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.hideInput = this.hideInput.bind(this);
   }
 
   componentDidMount() {
@@ -101,6 +102,10 @@ class CustomSider extends React.Component {
     });
   }
 
+  hideInput() {
+    this.setState({inputVisible: false});
+  }
+
   saveInputRef = input => this.input = input;
 
   render() {
@@ -141,6 +146,7 @@ class CustomSider extends React.Component {
                 onChange={this.handleInputChange}
                 onPressEnter={this.handleInputConfirm}
                 placeholder={'Nombre'}
+                onBlur={this.hideInput}
               />
             </div>
           }
