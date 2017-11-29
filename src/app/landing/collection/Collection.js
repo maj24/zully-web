@@ -50,7 +50,6 @@ class Collection extends React.Component {
     let collectionId = this.props.params.collectionId;
     if (collectionId !== undefined) {
       DocumentService.getCollectionDocuments(collectionId).then(response => {
-        console.log('documents -> ', response.documents);
         let item = {
           collection: {
             pk: collectionId,
@@ -58,14 +57,12 @@ class Collection extends React.Component {
           documents: response.documents,
         };
         let collections = [ item ];
-        console.log('collections -> ', collections);
         this.setState({ documents: response.documents, collections});
       });
     } else {
       let teamId = auth.getTeam();
       let query = this.props.location.query.query;
       DocumentService.search(teamId, query).then(response => {
-        console.log('search -> ', response.result);
         this.setState({ collections: response.result, tags: [] });
       });
     }
@@ -75,7 +72,6 @@ class Collection extends React.Component {
     let collectionId = this.props.params.collectionId;
     if (collectionId !== undefined) {
       TagService.getCollectionTags(collectionId).then(response => {
-        console.log('tags -> ', response.tags);
         let tagsMapped = response.tags.map(function(tag) {
           return tag.name;
         });

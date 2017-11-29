@@ -38,7 +38,6 @@ class Issue extends React.Component {
     this.setState({ mode: this.props.location.query.mode});
     this.attachQuillRefs();
     let documentId = this.props.params.issueId;
-    // TODO: if param issueId
     if (documentId !== undefined) {
       DocumentService.getDocument(documentId).then(response => {
         let tagsMapped = response.tags.map(function(tag) {
@@ -50,8 +49,6 @@ class Issue extends React.Component {
           editorHtml: response.contentHtml,
         });
       });
-    } else {
-      console.log('new document');
     }
     this.quillRef.enable(this.state.isEditMode);
   }
@@ -85,10 +82,8 @@ class Issue extends React.Component {
       collection_id: collectionId,
       tags: this.state.tags,
     };
-    console.log('request', newDocument);
     if (issueId !== undefined) {
       DocumentService.update(newDocument, issueId).then(response => {
-        console.log('saveDocument');
         this.setState({
           document: response,
         });
@@ -96,7 +91,6 @@ class Issue extends React.Component {
       });
     } else {
       newDocument.token = auth.getToken();
-      console.log('request', newDocument);
       DocumentService.create(newDocument).then(response => {
         this.setState({
           document: response,
@@ -115,7 +109,6 @@ class Issue extends React.Component {
   };
 
   handleChange(html) {
-    console.log('html->', html);
     if (html.length > 20) {
       this.setState({ editorHtml: html });
     }
@@ -124,12 +117,10 @@ class Issue extends React.Component {
 
   handleTagRemoved = (removedTag) => {
     const tags = this.state.tags.filter(tag => tag !== removedTag);
-    console.log(tags);
     this.setState({ tags });
   };
 
   showInput = () => {
-    console.log('show-input');
     this.setState({ inputVisible: true }, () => this.input.focus());
   };
 
@@ -138,19 +129,16 @@ class Issue extends React.Component {
   };
 
   handleInputTagChange = (e) => {
-    console.log('handle input change');
     this.setState({ inputValue: e.target.value });
   };
 
   handleInputConfirm = () => {
-    console.log('handle input confirm');
     const state = this.state;
     const inputValue = state.inputValue;
     let tags = state.tags;
     if (inputValue && tags.indexOf(inputValue) === -1) {
       tags = [ ...tags, inputValue ];
     }
-    console.log(tags);
     this.setState({
       tags,
       inputVisible: false,
@@ -175,7 +163,7 @@ class Issue extends React.Component {
 
 
   render() {
-    const { document, inputTextValue, inputVisible, inputValue, isEditMode, documentId } = this.state;
+    const { document, inputVisible, inputValue, isEditMode, documentId } = this.state;
     const {collectionId, issueId} = this.props.params;
     return (
       <div className="text-editor">

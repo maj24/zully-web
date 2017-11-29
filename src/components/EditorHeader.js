@@ -30,7 +30,6 @@ class EditorHeader extends React.Component {
 
   render() {
     const {isEditMode, creator} = this.props;
-    console.log('creator', creator);
     return (
       <div className="editor-header">
         <div className="flex match-width">

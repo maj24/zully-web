@@ -3,7 +3,7 @@ import { Button, Row, Col, Input, Alert } from 'antd';
 import auth from './../../../utils/auth.js';
 import { browserHistory } from 'react-router';
 import CollectionService from '../../../api/LoginService';
-import { ROUTES, STORAGE_KEY_TOKEN, STORAGE_KEY_USER, STORAGE_KEY_TEAM } from '../../../utils/constants';
+import { ROUTES, STORAGE_KEY_TOKEN, STORAGE_KEY_USER } from '../../../utils/constants';
 import Storage from '../../../utils/storage';
 
 

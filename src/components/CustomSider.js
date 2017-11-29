@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import { Layout, Menu, Icon, Input, Popover, Button } from 'antd';
+import { Layout, Menu, Icon, Input, Popover } from 'antd';
 const Search = Input.Search;
 import {ROUTES} from '../utils/constants';
 import auth from '../utils/auth';
@@ -26,13 +26,11 @@ class CustomSider extends React.Component {
   componentDidMount() {
     let teamId = auth.getTeam();
     CollectionService.getTeamCollections(teamId).then(response => {
-      console.log('collections => ', response);
       this.setState({ collections: response.collections});
     });
 
     let pathname = this.props.pathname;
     pathname = pathname.split('/');
-    console.log('array', pathname);
     if (pathname !== null && pathname.length >= 3) {
       if (pathname[1] === 'collections') {
         this.setState({
@@ -54,7 +52,6 @@ class CustomSider extends React.Component {
   }
 
   handleMenuClick = (e) => {
-    console.log('click ', e);
     if (e.key !== 'add') {
       browserHistory.push('/collections/' + e.key);
       this.setState({
@@ -79,7 +76,6 @@ class CustomSider extends React.Component {
   }
 
   handleSearch = (value) => {
-    console.log('handle search', value);
     browserHistory.push(`${ROUTES.COLLECTIONS}?query=${value}`);
   };
 
@@ -88,14 +84,12 @@ class CustomSider extends React.Component {
   };
 
   handleInputConfirm = () => {
-    console.log('handle input confirm');
     const inputValue = this.state.inputValue;
     let teamId = auth.getTeam();
     CollectionService.create(
       { name: inputValue },
       teamId
     ).then(response => {
-      console.log('response->', response);
       this.fetchCollections(teamId);
     });
     this.setState({inputVisible: false});
@@ -103,7 +97,6 @@ class CustomSider extends React.Component {
 
   fetchCollections(teamId) {
     CollectionService.getTeamCollections(teamId).then(response => {
-      console.log('collections => ', response);
       this.setState({ collections: response.collections});
     });
   }
