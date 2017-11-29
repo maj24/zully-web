@@ -11,7 +11,7 @@ export default {
   component: Layout,
   childRoutes: [
     {
-      childRoutes: [ Home, Collection, Issue ],
+      childRoutes: [ Collection, Issue ],
     },
     {
       onEnter: Validation.redirectToDashboard,
@@ -19,7 +19,7 @@ export default {
     },
     {
       onEnter: Validation.redirectToLogin,
-      childRoutes: [ Main ],
+      childRoutes: [ Main, Home ],
     },
     GenericNotFound,
   ],

@@ -22,7 +22,7 @@ class Auth {
   logout() {
     Storage.removeJsobObject(STORAGE_KEY_TOKEN);
     Storage.removeJsobObject(STORAGE_KEY_USER);
-    browserHistory.push(ROUTES.HOME);
+    browserHistory.push(ROUTES.LOGIN);
   }
 
   getToken() {

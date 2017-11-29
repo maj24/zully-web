@@ -121,6 +121,35 @@
   }
 }
 
+.login{
+  .login-content{
+    padding: 50px;
+  }
+  .login-btn{
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #2da664;
+    border-color: #2da664;
+    height: 40px;
+  }
+  .login-input{
+    height: 40px;
+    padding: 10px 12px 10px 12px;
+  }
+  .login-error {
+    border-color: red;
+  }
+  .login-error-txt{
+
+  }
+  .register-link {
+    color: #e91e63;
+  }
+}
+
+.logout-text {
+  color: #e91e63;
+}
 /* ---------- Sider -------------- */
 .sider {
   .search {
@@ -150,7 +179,6 @@
       border-color: #e91e63;
     }
   }
-
   .team {
     padding: 11px 16px 11px 16px;
     font-size: 16px;
@@ -210,6 +238,10 @@
     color: #262f39;
     .creator-container {
       margin: auto 0 auto 15px;
+      cursor: pointer;
+    }
+    .user-image{
+      margin-right: 10px;
     }
   }
   .input-add {

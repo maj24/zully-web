@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import { Layout, Menu, Icon, Input } from 'antd';
+import { Layout, Menu, Icon, Input, Popover, Button } from 'antd';
 const Search = Input.Search;
 import {ROUTES} from '../utils/constants';
 import auth from '../utils/auth';
 import  CollectionService from '../api/CollectionService';
 const { Sider } = Layout;
 import userIcon from './../assets/images/user-icon.png';
+import Storage from '../utils/storage';
+
 
 class CustomSider extends React.Component {
   constructor(props) {
@@ -61,6 +63,10 @@ class CustomSider extends React.Component {
     } else {
       this.setState({ inputVisible: true }, () => this.input.focus());
     }
+  };
+
+  handleLogoutClick = () => {
+    auth.logout();
   };
 
   displaySiderItems() {
@@ -151,10 +157,22 @@ class CustomSider extends React.Component {
             </div>
           }
           <div className="flex user">
-            <img src={userIcon} className={'user-image'}/>
-            <div className="creator-container">
-              <p>Huriata Bonilla</p>
-            </div>
+            <Popover
+              placement="topLeft"
+              title=""
+              content={
+                <a className="logout-text" onClick={this.handleLogoutClick}>Cerrar Sesión</a>
+              }
+              trigger="click"
+            >
+              <div className="creator-container">
+                <img src={userIcon} className="user-image"/>
+                <span>{!!Storage.getJsonObject('zully_user') &&
+                `${Storage.getJsonObject('zully_user').firstName} ${Storage.getJsonObject('zully_user').lastName}`
+                }
+                </span>
+              </div>
+            </Popover>
           </div>
         </Sider>
       </div>
