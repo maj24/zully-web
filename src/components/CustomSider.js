@@ -128,7 +128,7 @@ class CustomSider extends React.Component {
             />
           </div>
           <div className="team">
-            Yellowme
+            {auth.getTeamName()}
           </div>
           <Menu
             mode="inline"
