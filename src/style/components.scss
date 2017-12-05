@@ -187,7 +187,14 @@
     font-weight: 500;
     border-bottom: solid 1px #f0f0f7;
   }
-
+  .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-inline {
+    box-shadow: none;
+    position: absolute;
+    top: 110px;
+    bottom: 0;
+    overflow-y: auto;
+    margin-bottom: 81px;
+  }
   .ant-menu-item {
     padding-left: 29px !important;
     margin-bottom: 8px !important;
@@ -266,7 +273,6 @@
       border-color: #e91e63;
     }
   }
-
   .ant-menu-inline, .ant-menu-vertical {
     border-right: none;
   }
