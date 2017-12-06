@@ -4,7 +4,7 @@ import DocumentService from '../../../api/DocumentService';
 import TagService from '../../../api/TagService';
 import {ROUTES} from '../../../utils/constants';
 import auth from '../../../utils/auth';
-import { Button } from 'antd';
+import { Button, Spin, Icon } from 'antd';
 import _ from 'lodash';
 import CollectionCards from '../../../components/CollectionCards';
 
@@ -16,6 +16,7 @@ class Collection extends React.Component {
       documents: [],
       tags: [],
       collections: [],
+      loading: false,
     };
     this.fetchDocuments = this.fetchDocuments.bind(this);
     this.handleClickCreate = this.handleClickCreate.bind(this);
@@ -47,6 +48,7 @@ class Collection extends React.Component {
   }
 
   fetchDocuments() {
+    this.setState({loading: true});
     let collectionId = this.props.params.collectionId;
     if (collectionId !== undefined) {
       DocumentService.getCollectionDocuments(collectionId).then(response => {
@@ -57,13 +59,25 @@ class Collection extends React.Component {
           documents: response.documents,
         };
         let collections = [ item ];
-        this.setState({ documents: response.documents, collections});
+        this.setState({
+          documents: response.documents,
+          collections,
+          loading: false,
+        });
+      }).catch(e => {
+        this.setState({loading: false});
       });
     } else {
       let teamId = auth.getTeam();
       let query = this.props.location.query.query;
       DocumentService.search(teamId, query).then(response => {
-        this.setState({ collections: response.result, tags: [] });
+        this.setState({
+          collections: response.result,
+          tags: [],
+          loading: false,
+        });
+      }).catch(e => {
+        this.setState({loading: false});
       });
     }
   }
@@ -101,18 +115,28 @@ class Collection extends React.Component {
 
   render() {
     const collectionId = this.props.params.collectionId;
+    const { loading } = this.state;
     return (
       <div>
-        { collectionId === undefined &&
-        <div className="search-by">
-          <p>Resultados para: </p>
-          <p className="query">"{this.state.query}"</p>
-        </div> }
-        { this.displayCollections() }
-        { collectionId !== undefined &&
-        <div className="floating-btn">
-          <Button onClick={this.handleClickCreate} type="primary" shape="circle" icon="plus" size={'large'} />
-        </div> }
+        { loading &&
+          <div className="spin">
+            <Spin/>
+          </div>
+        }
+        { !loading &&
+          <div>
+            { collectionId === undefined &&
+            <div className="search-by">
+              <p>Resultados para: </p>
+              <p className="query">"{this.state.query}"</p>
+            </div> }
+            { this.displayCollections() }
+            { collectionId !== undefined &&
+            <div className="floating-btn">
+              <Button onClick={this.handleClickCreate} type="primary" shape="circle" icon="plus" size={'large'} />
+            </div> }
+          </div>
+        }
       </div>
     );
   }
