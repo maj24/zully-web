@@ -197,7 +197,7 @@
   }
   .menu {
     position: absolute;
-    top: 110px;
+    top: 130px;
     bottom: 0;
     overflow-y: auto;
     margin-bottom: 81px;
@@ -299,6 +299,10 @@
   .ant-spin-dot i {
     background-color: #c2185b !important;
   }
+}
+
+.ant-popover-placement-topLeft {
+  z-index: 3000 !important;
 }
 
 

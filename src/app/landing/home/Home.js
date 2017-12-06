@@ -1,4 +1,7 @@
 import React from 'react';
+import auth from '../../../utils/auth';
+import  CollectionService from '../../../api/CollectionService';
+import { browserHistory } from 'react-router';
 
 class Home extends React.Component {
   constructor(props) {
@@ -9,7 +12,12 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-
+    let teamId = auth.getTeam();
+    CollectionService.getTeamCollections(teamId).then(response => {
+      if (response.collections.length > 0) {
+        browserHistory.push('/collections/' + response.collections[0].pk);
+      }
+    });
   }
 
   render() {

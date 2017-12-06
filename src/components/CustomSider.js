@@ -21,12 +21,24 @@ class CustomSider extends React.Component {
     this.handleMenuClick = this.handleMenuClick.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.hideInput = this.hideInput.bind(this);
+
   }
 
   componentDidMount() {
     let teamId = auth.getTeam();
     CollectionService.getTeamCollections(teamId).then(response => {
       this.setState({ collections: response.collections});
+    });
+
+    browserHistory.listen((event)=>{
+      let pathname = event.pathname.split('/');
+      if (pathname != null && pathname.length >= 3) {
+        if (pathname[1] === 'collections') {
+          this.setState({
+            currentItem: pathname[2],
+          });
+        }
+      }
     });
 
     let pathname = this.props.pathname;
@@ -38,17 +50,6 @@ class CustomSider extends React.Component {
         });
       }
     }
-
-    // browserHistory.listen((event)=>{
-    //   let pathname = event.pathname.split('/');
-    //   if (pathname != null && pathname.length >= 3) {
-    //     if (pathname[1] === 'collections') {
-    //       this.setState({
-    //         currentItem: pathname[2],
-    //       });
-    //     }
-    //   }
-    // });
   }
 
   handleMenuClick = (e) => {
