@@ -6,8 +6,12 @@
   padding: 16px 20px;
   background-color: #fff;
   box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.5);
-  margin: -15px -30px;
   display: flex;
+  position: fixed;
+  right: 0px;
+  left: 240px;
+  top: 0px;
+  z-index: 1000;
 
   .match-width {
     width: 100%;
@@ -76,6 +80,7 @@
   min-height: 900px;
   max-width: 936px;
   margin: 40px auto;
+  margin-top: 100px;
 
   .title {
     //font-family: Lato;
@@ -153,8 +158,10 @@
 }
 /* ---------- Sider -------------- */
 .sider {
+  z-index: 2000;
+
   .search {
-    padding: 16px 14px 16px 14px;
+    padding: 18px;
     font-size: 14px;
     color: #a0a0a2;
     border-bottom: solid 1px #f0f0f7;
@@ -162,6 +169,7 @@
     .ant-input {
       border-radius: 18px;
       border: solid 1px #dedede;
+      height: 36px;
     }
     .ant-input:hover .ant-input:focus {
       border-color: #e91e63;
@@ -187,13 +195,16 @@
     font-weight: 500;
     border-bottom: solid 1px #f0f0f7;
   }
-  .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-inline {
-    box-shadow: none;
+  .menu {
     position: absolute;
     top: 110px;
     bottom: 0;
     overflow-y: auto;
     margin-bottom: 81px;
+    width: 240px;
+  }
+  .ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-inline {
+    box-shadow: none;
   }
   .ant-menu-item {
     padding-left: 29px !important;

@@ -123,20 +123,21 @@ class CustomSider extends React.Component {
           <div className="team">
             {auth.getTeamName()}
           </div>
-          <Menu
-            mode="inline"
-            selectedKeys={[ this.state.currentItem ]}
-            onClick={this.handleMenuClick}
-          >
-            { this.displaySiderItems() }
-            {!inputVisible &&
+          <div className="menu">
+            <Menu
+              mode="inline"
+              selectedKeys={[ this.state.currentItem ]}
+              onClick={this.handleMenuClick}
+            >
+              { this.displaySiderItems() }
+              {!inputVisible &&
               <Menu.Item key={'add'}>
                 <Icon type="plus" />
                 <span className="nav-text add-collection">Agregar Colección</span>
               </Menu.Item>
-            }
-          </Menu>
-          {inputVisible &&
+              }
+            </Menu>
+            {inputVisible &&
             <div className="input-add">
               <Input
                 ref={this.saveInputRef}
@@ -148,7 +149,9 @@ class CustomSider extends React.Component {
                 onBlur={this.hideInput}
               />
             </div>
-          }
+            }
+          </div>
+
           <div className="flex user">
             <Popover
               placement="topLeft"
