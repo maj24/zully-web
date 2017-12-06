@@ -200,6 +200,7 @@
     top: 130px;
     bottom: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-bottom: 81px;
     width: 240px;
   }
@@ -336,6 +337,26 @@
   left: 50%;
   transform: translate(-50%,-50%);
   margin-left: 120px;
+  text-align: center;
+
+  p {
+    margin-top: 10px;
+  }
+}
+.text-sub {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  color: #999;
+  text-align: center;
+}
+.text-empty {
+  font-family: Lato;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  color: #262f39;
+  text-align: center;
 }
 
 /*  Toolbar   */

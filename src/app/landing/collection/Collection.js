@@ -7,7 +7,7 @@ import auth from '../../../utils/auth';
 import { Button, Spin, Col, Row } from 'antd';
 import _ from 'lodash';
 import CollectionCards from '../../../components/CollectionCards';
-import emptyCollectionImage from './../../../assets/images/empty-art.png';
+import emptyCollectionImage from './../../../assets/images/documents-art.png';
 
 
 class Collection extends React.Component {
@@ -79,6 +79,7 @@ class Collection extends React.Component {
           collections: response.result,
           tags: [],
           loading: false,
+          empty: false,
         });
       }).catch(e => {
         this.setState({loading: false});
@@ -130,6 +131,9 @@ class Collection extends React.Component {
         { empty && !loading &&
         <div className="center-all">
           <img src={emptyCollectionImage}/>
+          <p className="text-empty">Esta colección está vacía</p>
+          <p className="text-sub">Si encontraste la solución a una problemática ¡Documéntala! Es fácil</p>
+
           <div className="add-btn-empty">
             <Button onClick={this.handleClickCreate}>
               Crear documento
