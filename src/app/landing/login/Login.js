@@ -36,9 +36,7 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     };
-    console.log(credentials);
     CollectionService.authenticate(credentials).then(res => {
-      console.log(res);
       Storage.setJsonObject(STORAGE_KEY_TOKEN, res.token);
       Storage.setJsonObject(STORAGE_KEY_USER, res.user);
       browserHistory.push(ROUTES.HOME);

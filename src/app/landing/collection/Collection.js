@@ -4,9 +4,11 @@ import DocumentService from '../../../api/DocumentService';
 import TagService from '../../../api/TagService';
 import {ROUTES} from '../../../utils/constants';
 import auth from '../../../utils/auth';
-import { Button, Spin, Icon } from 'antd';
+import { Button, Spin, Col, Row } from 'antd';
 import _ from 'lodash';
 import CollectionCards from '../../../components/CollectionCards';
+import emptyCollectionImage from './../../../assets/images/empty-art.png';
+
 
 class Collection extends React.Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class Collection extends React.Component {
       tags: [],
       collections: [],
       loading: false,
+      empty: false,
     };
     this.fetchDocuments = this.fetchDocuments.bind(this);
     this.handleClickCreate = this.handleClickCreate.bind(this);
@@ -63,6 +66,7 @@ class Collection extends React.Component {
           documents: response.documents,
           collections,
           loading: false,
+          empty: response.documents.length === 0,
         });
       }).catch(e => {
         this.setState({loading: false});
@@ -115,13 +119,23 @@ class Collection extends React.Component {
 
   render() {
     const collectionId = this.props.params.collectionId;
-    const { loading } = this.state;
+    const { loading, empty } = this.state;
     return (
       <div>
         { loading &&
-          <div className="spin">
+          <div className="spin center-all">
             <Spin/>
           </div>
+        }
+        { empty && !loading &&
+        <div className="center-all">
+          <img src={emptyCollectionImage}/>
+          <div className="add-btn-empty">
+            <Button onClick={this.handleClickCreate}>
+              Crear documento
+            </Button>
+          </div>
+        </div>
         }
         { !loading &&
           <div>
@@ -131,7 +145,7 @@ class Collection extends React.Component {
               <p className="query">"{this.state.query}"</p>
             </div> }
             { this.displayCollections() }
-            { collectionId !== undefined &&
+            { collectionId !== undefined && !empty &&
             <div className="floating-btn">
               <Button onClick={this.handleClickCreate} type="primary" shape="circle" icon="plus" size={'large'} />
             </div> }

@@ -304,5 +304,37 @@
 .ant-popover-placement-topLeft {
   z-index: 3000 !important;
 }
+.add-btn-empty {
+  margin-top: 30px;
+  text-align: center;
 
+  .ant-btn {
+    background-color: #e91e63;
+    color: #fff;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    border: none;
+  }
+  .ant-btn:hover, .ant-btn:focus, .ant-btn:active, .ant-btn.active {
+    background: #fa4f7b;
+  }
+  .ant-btn:hover, .ant-btn:focus {
+    background-color: #fa4f7b;
+    color: #fff;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    border: none;
+  }
+}
+.center-all {
+  position: absolute;
+  top:  45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin-left: 120px;
+}
 
