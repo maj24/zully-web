@@ -257,6 +257,6 @@ Issue.modules = {
 Issue.formats = [
   'header', 'align', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
+  'list', 'bullet', 'indent', 'list',
   'link', 'image', 'color', 'video', 'code-block',
 ];
