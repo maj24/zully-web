@@ -43,7 +43,7 @@ class EditorHeader extends React.Component {
           <Toolbar isEditMode={isEditMode}/>
           <div className="actions pull-right">
             { isEditMode ?
-              <Button className="save-btn" type="primary" onClick={this.handleClickSave}>Guardar</Button> :
+              <Button loading={this.props.loading} className="save-btn" type="primary" onClick={this.handleClickSave}>Guardar</Button> :
               <Button className="save-btn" type="primary" ghost onClick={this.handleClickEdit}>Editar</Button>
             }
             <Icon className="close-icon" type="close" onClick={this.handleExit} />

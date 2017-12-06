@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import EditorHeader from '../../../components/EditorHeader';
-import {Tag, Input, Tooltip, Button} from 'antd';
+import {Tag, Input, Tooltip, Button, message} from 'antd';
 import DocumentService from '../../../api/DocumentService';
 import { browserHistory } from 'react-router';
 import {ROUTES} from '../../../utils/constants';
@@ -25,6 +25,7 @@ class Issue extends React.Component {
       inputValue: '', // tag input
       isEditMode: this.props.location.query.mode === modes.edit,
       documentId: this.props.params.issueId,
+      loading: false,
     };
     this.quillRef = null;      // Quill instance
     this.reactQuillRef = null; // ReactQuill component
@@ -74,6 +75,7 @@ class Issue extends React.Component {
   }
 
   saveDocument() {
+    this.setState({loading: true});
     let {collectionId, issueId} = this.props.params;
     let newDocument = {
       contentHtml: this.state.editorHtml,
@@ -86,17 +88,27 @@ class Issue extends React.Component {
       DocumentService.update(newDocument, issueId).then(response => {
         this.setState({
           document: response,
+          loading: false,
         });
+        message.success('El documento se ha guardado');
         browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${issueId}?mode=1`);
+      }).catch(e => {
+        this.setState({loading: false});
+        message.error('Error!');
       });
     } else {
       newDocument.token = auth.getToken();
       DocumentService.create(newDocument).then(response => {
+        message.success('El documento se ha guardado.');
         this.setState({
+          loading: false,
           document: response,
           documentId: response.pk,
         });
         browserHistory.push(`${ROUTES.COLLECTIONS}/${collectionId}${ROUTES.DOCUMENTS}/${response.pk}?mode=1`);
+      }).catch(e => {
+        this.setState({loading: false});
+        message.error('Error! Asegúrate de poner un título y contenido');
       });
     }
   }
@@ -163,7 +175,7 @@ class Issue extends React.Component {
 
 
   render() {
-    const { document, inputVisible, inputValue, isEditMode, documentId } = this.state;
+    const { document, inputVisible, inputValue, isEditMode, documentId, loading } = this.state;
     const {collectionId, issueId} = this.props.params;
     return (
       <div className="text-editor">
@@ -173,6 +185,7 @@ class Issue extends React.Component {
           issueId={issueId}
           saveDocument={this.saveDocument}
           creator={document.creator}
+          loading={loading}
         />
         <div className="document">
           <div className="document-header">
